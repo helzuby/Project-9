@@ -46,7 +46,7 @@ function addTodoToList(todo) {
 }
 
 function saveTodoToLocalStorage(todo) {
-  localStorage.setItem('todo', JSON.stringify(todo));
+  localStorage.setItem('todos', JSON.stringify(todo));
 }
 
 function deleteTodoItem(id) {
@@ -71,18 +71,22 @@ function renderTodo() {
 }
 
                   
- if (localStorage.getItem("todos") == null) {
-        axios.get("https://jsonplaceholder.typicode.com/todos")
-            .then(function (response) {
-                const todos = [];
-                for (let i = 0; i < 5; i++) {
-                    todos.push(response.data[i].title);
-                }
-                window.localStorage.setItem("todo", JSON.stringify(todos));
-                renderTodo();
-            });
+   if (localStorage.getItem("todo") == null) {
+    axios.get("https://jsonplaceholder.typicode.com/todo")
+      .then(function (response) {
+        const todo = response.data;
+
+        for (let i = 0; i < 5; i++) {
+          const todo = todos[i];
+          addTodoToList({
+            text: todo.title,
+            id: todo.id
+          });
+        }
+
+        window.localStorage.setItem("todos", JSON.stringify(todos));
+      }) 
     } else {
-        renderTodo();
-    }
-  
-  
+    renderTodo();
+  }
+
