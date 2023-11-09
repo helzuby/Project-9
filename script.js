@@ -25,8 +25,8 @@ function addTodo() {
 
 // Function to get tasks from local storage
 function getTodoFromLocalStorage() {
-  const todo = JSON.parse(localStorage.getItem('todo'));
-  return todo || [];
+  const todos = JSON.parse(localStorage.getItem('todos'));
+  return todos || [];
 }
 
 // Function to add todo to HTML using JS
@@ -65,28 +65,31 @@ function deleteTodo() {
 
 function renderTodo() {
   ol.innerHTML = '';
-  const savedTodos = JSON.parse(localStorage.getItem('todos')) || [];
+  const savedTodos = JSON.parse(localStorage.getItem('todo')) || [];
       savedTodos.forEach(addTodoToList);
   
 }
 
                   
    if (localStorage.getItem("todo") == null) {
-    axios.get("https://jsonplaceholder.typicode.com/todo")
+    axios.get("https://jsonplaceholder.typicode.com/todos")
       .then(function (response) {
-        const todo = response.data;
+        const todos = response.data;
 
         for (let i = 0; i < 5; i++) {
           const todo = todos[i];
-          addTodoToList({
-            text: todo.title,
+          const todoObject = {
+          text: todo.title,
             id: todo.id
-          });
-        }
+          };
+        
+        addTodoToList(todoObject);
+      }
 
         window.localStorage.setItem("todos", JSON.stringify(todos));
-      }) 
-    } else {
+      });
+      } else {
     renderTodo();
   }
+
 
