@@ -65,13 +65,13 @@ function deleteTodo() {
 
 function renderTodo() {
   ol.innerHTML = '';
-  const savedTodos = JSON.parse(localStorage.getItem('todo')) || [];
+  const savedTodos = JSON.parse(localStorage.getItem('todos')) || [];
       savedTodos.forEach(addTodoToList);
   
 }
 
                   
-   if (localStorage.getItem("todo") == null) {
+   if (localStorage.getItem("todos") == null) {
     axios.get("https://jsonplaceholder.typicode.com/todos")
       .then(function (response) {
         const todos = response.data;
@@ -83,10 +83,10 @@ function renderTodo() {
             id: todo.id
           };
         
-        addTodoToList(todoObject);
+        todoItem.push(todoObject);
       }
 
-        window.localStorage.setItem("todos", JSON.stringify(todos));
+        window.localStorage.setItem("todos", JSON.stringify(todoItems));
       });
       } else {
     renderTodo();
